@@ -9,11 +9,23 @@ var User = require('../models/user.js');
 
 module.exports = function(app){
 	app.get('/',function(req,res){
-		res.render('index',{title : "主页"});
+		res.render('index',{
+			title : "主页",
+			user : req.session.user,
+			success : req.flash('success').toString(),
+			error: req.flash('error').toString()
+		});
 	});
+	app.get('/reg',checkNotLogin);
 	app.get('/reg',function(req,res){
-		res.render('reg',{title : "注册"});
+		res.render('reg',{
+			title : "注册",
+			user : req.session.user,
+			success : req.flash('success').toString(),
+			error: req.flash('error').toString()
+		});
 	});
+	app.post('/reg',checkNotLogin);
 	app.post('/reg',function(req,res){
 		var name = req.body.name;
 		var password = req.body.password;
@@ -46,19 +58,65 @@ module.exports = function(app){
 			});
 		});
 	});
+	app.get('/login',checkNotLogin);
 	app.get('/login',function(req,res){
-		res.render('login',{title : "登陆"});
+		res.render('login',{
+			title : "登陆",
+			user : req.session.user,
+			success : req.flash('success').toString(),
+			error : req.flash('error').toString()
+		});
 	});
-	app.post('/login',function(res,req){
-
+	app.post('/login',checkNotLogin);
+	app.post('/login',function(req,res){
+		var md5 = crypto.createHash('md5');
+		var password = md5.update(req.body.password).digest('hex');
+		User.get(req.body.name,function(err,user){
+			if(!user){
+				req.flash('error','用户或密码错误');
+				return res.redirect('/login');
+			}
+			if(user.password != password){
+				req.flash('error','用户或密码错误');
+				return res.redirect('/login');
+			}
+			req.session.user = user;
+			req.flash('success','登陆成功');
+			res.redirect('/');
+		});
 	});
+	app.get('/post',checkLogin);
 	app.get('/post',function(req,res){
-		res.render('post',{title : "发表"});
+		res.render('post',{
+			title : "发表",
+			user : req.session.user,
+			error : req.flash('error').toString(),
+			success : req.flash('success').toString()
+		});
 	});
+	app.post('/post',checkLogin);
 	app.post('/post',function(req,res){
 
-	})
+	});
+	app.get('/logout',checkLogin);
 	app.get('/logout',function(req,res){
-		
-	})
+		req.session.user = null;
+		req.flash('success','登出成功');
+		res.redirect('/');
+	});
+
+	function checkLogin(req,res,next){
+		if(!req.session.user){
+			req.flash('error','用户未登录');
+			res.redirect('/login');
+		}
+		next();
+	}
+	function checkNotLogin(req,res,next){
+		if(req.session.user){
+			req.flash('error','用户已登陆');
+			res.redirect('back');//back表示返回之前的页面，内置
+		}
+		next();
+	}
 }

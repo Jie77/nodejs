@@ -19,12 +19,12 @@ User.prototype.save = function(callback){
 		if(err){
 			return callback(err);
 		}
-		db.collection('users',function(err,collection){
+		db.collection('users',function(err,collect){
 			if(err){
 				mongodb.close();
 				return callback(err);
 			}
-			collection.insert(user,{
+			collect.insert(user,{
 				safe:true
 			},function(err,user){
 				mongodb.close();
@@ -41,12 +41,12 @@ User.get = function(name,callback){
 		if(err){
 			return callback(err);
 		}
-		db.collection('users',function(err,collection){
+		db.collection('users',function(err,collect){
 			if(err){
 				mongodb.close();
 				return callback(err);
 			}
-			collection.findOne({
+			collect.findOne({
 				name:name
 			},function(err,user){
 				mongodb.close();
