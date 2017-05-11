@@ -5,15 +5,23 @@
  */
 
 var crypto = require('crypto');
+var fs = require('fs');
 var User = require('../models/user.js');
+var Post = require('../models/post.js');
 
 module.exports = function(app){
 	app.get('/',function(req,res){
-		res.render('index',{
-			title : "主页",
-			user : req.session.user,
-			success : req.flash('success').toString(),
-			error: req.flash('error').toString()
+		Post.get(null,function(err,posts){
+			if(err){
+				posts = [];
+			}
+			res.render('index',{
+				title : "主页",
+				user : req.session.user,
+				posts : posts,
+				success : req.flash('success').toString(),
+				error: req.flash('error').toString()
+			});
 		});
 	});
 	app.get('/reg',checkNotLogin);
@@ -96,7 +104,16 @@ module.exports = function(app){
 	});
 	app.post('/post',checkLogin);
 	app.post('/post',function(req,res){
-
+		var currentUser = req.session.user,
+		post = new Post(currentUser.name,req.body.title,req.body.post);
+		post.save(function(err){
+			if(err){
+				req.flash('error',err);
+				return res.redirect('/');
+			}
+			req.flash('success','发布成功');
+			res.redirect('/');
+		});
 	});
 	app.get('/logout',checkLogin);
 	app.get('/logout',function(req,res){
@@ -104,7 +121,31 @@ module.exports = function(app){
 		req.flash('success','登出成功');
 		res.redirect('/');
 	});
-
+	app.get('/upload',checkLogin);
+	app.get('/upload',function(req,res){
+		res.render('upload',{
+			title:'文件上传',
+			user:req.session.user,
+			success:req.flash('success').toString(),
+			error:req.flash('error').toString()
+		});
+	});
+	app.post('/upload',checkLogin);
+	app.post('/upload',function(req,res){
+		for(var i in req.files){
+			console.log(req.files[i].path+"----"+req.files[i].name);
+			if(req.files.length==0){
+				fs.unlinkSync(req.files[i].path);
+				console.log("remove a empty file");
+			}else{
+				var tar_path = "./public/images" + req.files[i].name;
+				fs.renameSync(req.files[i].path,tar_path);
+				console.log("rename a file");
+			}
+		}
+		req.flash('success',"上传成功")
+		res.redirect('/upload');
+	});
 	function checkLogin(req,res,next){
 		if(!req.session.user){
 			req.flash('error','用户未登录');

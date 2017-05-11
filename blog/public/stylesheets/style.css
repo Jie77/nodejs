@@ -18,6 +18,7 @@ nav{
 	display:block;
 	float:left;
 	width:20%;
+	height:100%;
 }
 nav ul{
 	display:block;
@@ -35,4 +36,10 @@ nav ul li{
 a{
 	text-decoration:none;
 	color:#000;
+}
+.content{
+	padding-right:10%;
+}
+p{
+	padding-top:1em;
 }
