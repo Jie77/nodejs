@@ -134,16 +134,16 @@ module.exports = function(app){
 	app.post('/upload',function(req,res){
 		for(var i in req.files){
 			console.log(req.files[i].path+"----"+req.files[i].name);
-			if(req.files.length==0){
+			if(req.files[i].size==0){
 				fs.unlinkSync(req.files[i].path);
 				console.log("remove a empty file");
 			}else{
-				var tar_path = "./public/images" + req.files[i].name;
+				var tar_path = './public/images' + req.files[i].name;
 				fs.renameSync(req.files[i].path,tar_path);
 				console.log("rename a file");
 			}
 		}
-		req.flash('success',"上传成功")
+		req.flash('success',"上传成功");
 		res.redirect('/upload');
 	});
 	function checkLogin(req,res,next){

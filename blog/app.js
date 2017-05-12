@@ -21,7 +21,7 @@ app.set('view engine', 'ejs');
 app.use(flash());
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use(express.bodyParser({keepExtensions:true,uploadDir:'./public/images'}));//不删除文件后缀
+app.use(express.bodyParser({keepExtensions:true, uploadDir:'./public/images'}));//不删除文件后缀
 app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.session({
