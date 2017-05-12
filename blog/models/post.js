@@ -13,7 +13,7 @@ Post.prototype.save = function(callback){
 	var date = new Date();
 	var time = {
 		date : date,
-		minute : date.getFullYear()+'-'+(date.getMonth()+1) +'-'+date.getDay()+'-'+date.getHours()+'-'+date.getMinutes()
+		minute : date.getFullYear()+'-'+(date.getMonth()+1) +'-'+date.getDay()+' '+date.getHours()+':'+date.getMinutes()
 	};
 	//要存入的数据
 	var post = {
