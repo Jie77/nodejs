@@ -9,7 +9,11 @@ module.exports = (app)=>{
 	});
 	app.post('/login',(req,res)=>{
 		console.log(req.body.name+"----"+req.body.pwd);
+		
 		res.write("nvjsknkjjjjjjjjjj");
 		res.end();
+	});
+	app.post('/resgister',(req.res)=>{
+
 	});
 }
