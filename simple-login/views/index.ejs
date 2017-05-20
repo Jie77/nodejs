@@ -5,4 +5,11 @@
 </form>
 <button id="login">登陆</button>
 <button id="resgister">注册</button>
+
+<% if (success){ %>
+<div><%= success %></div>
+<% } %>
+<% if (error) { %>
+<div><%= error %></div>
+<% } %>
 <%- include footer %>

@@ -2,11 +2,12 @@ var xhr = new XMLHttpRequest();
 var form = document.getElementById('form');
 var btn = document.getElementById('login');
 var resgister = document.getElementById('resgister');
-var data = new FormData(form);
+
 
 btn.addEventListener('click',log,false);
 resgister.addEventListener('click',res,false)
 function log(){
+	var data = new FormData(form);
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4){
 			console.log(xhr.responseText);
@@ -17,6 +18,7 @@ function log(){
 }
 
 function res(){
+	var data = new FormData(form);
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4){
 			console.log(xhr.responseText);
