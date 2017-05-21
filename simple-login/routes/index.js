@@ -14,7 +14,7 @@ module.exports = function(app){
 			error:req.flash('error').toString()
 		});
 	});
-	app.post('/login',function(req,res){
+	app.post('/login',(req,res)=>{
 		console.log(req.body.name+"----"+req.body.pwd);
 		var u_name = req.body.name;
 		var u_pwd = req.body.pwd;
