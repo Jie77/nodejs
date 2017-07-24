@@ -4,8 +4,7 @@ const fs = require('fs');
 
 
 http.createServer(function(req,res){
-	console.log(req.url);
-	//var pathName = url.parse(req.url).pathname;
+	console.log(url.parse(req.url));
 	var pathName = req.url;
 	if(pathName === '/index'){
 		fs.readFile('./index.html',function(err,data){
@@ -19,6 +18,9 @@ http.createServer(function(req,res){
 			res.write(data);
 			res.end();
 		})
+	}else{
+		res.writeHead(404,{'Content-Type':'text/html'});
+		res.end('ERROR');
 	}
 
 }).listen(3000);
