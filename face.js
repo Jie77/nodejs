@@ -1,31 +1,32 @@
-var http = require('http');
+var https = require('https');
+var util = require('util');
+var url = require('url');
 var querystring = require('querystring');
 
+var urlGetTicket = "https://api-cn.faceplusplus.com/facepp/v3/detect";
 
+var post_option = url.parse(urlGetTicket);
+post_option.method = "POST";
+var fs = require('fs');
+var imgdata = fs.readFileSync('./lin.jpg').toString();
+console.log(imgdata);
 var post_data = querystring.stringify({
-         product : 'club',
-         sign : 'ddddddddddddddd',
-         sender: '发送者的名字:超级管理员',
-         uids : ['ffwq@qq.com', 'ffqwf@www.com'],
-         msg : 'wwww'
+    api_key: 'n303kG3cdv43J8RuJ5nt5H7hU3IAZWhU',
+    api_secret: 'grl4t7FC9R6-JsTIFZ-rps9xjN_VKT3_',
+    image_file: imgdata,
+    return_landmark: 1
 });
-
-var options = {
-    host: '119.29.249.88',
-    port: 3000,
-    method: 'POST'
+post_option.headers = {
+    'Content-Type' : 'multipart/form-data'
 };
-
-
-var req = http.request(options, function(res) {
-  console.log('STATUS: ' + res.statusCode);
-  console.log('HEADERS: ' + JSON.stringify(res.headers));
-  res.setEncoding('utf8');
-  res.on('data', function (chunk) {
-    console.log('BODY: ' + chunk);
-  });
+var post_req = https.request(post_option,function(res){
+    res.setEncoding('utf8');
+    res.on('data',function(chunk){
+        console.log(chunk);
+    });
 });
+//console.log(post_data);
+post_req.write(post_data);
+post_req.end();
 
-// write data to request body
-req.write(post_data + "\n");
-req.end();
+//var server = https.createServer(function(){}).listen('8080');
