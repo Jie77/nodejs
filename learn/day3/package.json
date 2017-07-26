@@ -1,0 +1,19 @@
+{
+  "name": "day3",
+  "version": "1.0.0",
+  "description": "file upload",
+  "main": "post.js",
+  "dependencies": {
+    "_formidable@1.1.1@formidable": "^1.1.1",
+    "formidable": "^1.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "file"
+  ],
+  "author": "Jie77",
+  "license": "ISC"
+}

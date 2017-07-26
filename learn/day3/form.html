@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 </head>
 <body>
-<form action="http://127.0.0.1/upload" method="post">
+<form action="http://127.0.0.1/upload" enctype="multipart/form-data" method="post">
 	姓名：<input type="text" name="name"><br>
 	年龄：<input type="text" name="age"><br>
 	<input type="radio" name="sex" value="man" >男
@@ -14,6 +14,7 @@
 	<input type="checkbox" name="hobby" value="喝">喝
 	<input type="checkbox" name="hobby" value="玩">玩
 	<input type="checkbox" name="hobby" value="乐">乐<br>
+	<input type="file" name="file"><br>
 	<input type="submit" name="submit" value="提交">
 </form>
 </body>
