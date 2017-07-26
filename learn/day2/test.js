@@ -38,7 +38,10 @@ http.createServer(function(req,res){
 
 function getMime(extname,callback){
 	fs.readFile('./mime.json',function(err,data){
-		if(err) throw err;
+		if(err){
+			throw err;
+			return;
+		}
 		var a = JSON.parse(data);
 		callback(a[extname]);
 	})
