@@ -17,16 +17,29 @@ http.createServer(function(req,res){
 			});
 			return;//注意这步很重要！！
 		}
-		var MIME = getMime(extname);
+	/*	var MIME = getMime(extname);
 		console.log(MIME);
 		res.writeHead(200,{'Content-Type':MIME});
-		res.end(data);
+		res.end(data);*/
+
+		getMime(extname,function(MIME){
+			res.writeHead(200,{'Content-Type':MIME});
+			res.end(data);
+		})
 	});
 
 }).listen(3000);
 
-function getMime(extname){
+/*function getMime(extname){
 	var data = fs.readFileSync('./mime.json');//采用同步读取，如果异步的话，就会在还未读取完文件的情况下就已经返回页面，此时的Content-Type为undefine
 	var a = JSON.parse(data);
 	return a[extname];
+}*/
+
+function getMime(extname,callback){
+	fs.readFile('./mime.json',function(err,data){
+		if(err) throw err;
+		var a = JSON.parse(data);
+		callback(a[extname]);
+	})
 }
