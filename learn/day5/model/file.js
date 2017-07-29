@@ -7,6 +7,7 @@ function getAlbumName(callback){
 	fs.readdir('./uploads',function(err,files){
 		if(err){
 			console.log(err);
+			callback("err",null);
 			return;
 		}
 		var allAlbums = [];
@@ -33,7 +34,7 @@ function getAlbumName(callback){
 function getfileName(name,callback){
 	fs.readdir('./uploads/'+name,function(err,files){
 		if(err){
-			console.log(err);
+			callback("err",null);
 			return;
 		}
 		callback(null,files);

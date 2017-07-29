@@ -3,9 +3,14 @@ const url = require('url');
 
 exports.getIndex = getIndex;
 exports.getAlbum = getAlbum;
+exports.geterr = geterr;
 
-function getIndex(req,res){
+function getIndex(req,res,next){
 	file.getAlbumName(function(err,data){
+		if(err){
+			next();
+			return;
+		}
 		var pathname = decodeURI(url.parse(req.url).pathname).split('/');
 		pathname = pathname.slice(1,-1);
 		pathname.unshift('index');
@@ -17,8 +22,12 @@ function getIndex(req,res){
 	})
 }
 
-function getAlbum(req,res){
+function getAlbum(req,res,next){
 	file.getfileName(req.params['albumName'],function(err,data){
+		if(err){
+			next();
+			return;
+		}
 		var pathname = decodeURI(url.parse(req.url).pathname).split('/');
 		pathname = pathname.slice(1,-1);
 		pathname.unshift('index');
@@ -30,3 +39,8 @@ function getAlbum(req,res){
 		})
 	})
 }
+
+function geterr(req,res){
+	res.render('404');
+}
+

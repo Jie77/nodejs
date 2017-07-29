@@ -11,6 +11,7 @@ app.set('view engine','ejs');
 
 app.get('/',router.getIndex);
 app.get('/:albumName',router.getAlbum);
+app.get('*',router.geterr);
 
 app.listen(3000);
 
