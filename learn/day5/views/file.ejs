@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Album</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+	<div class="container">
+		<nav>
+			<div class="nav_left">相册</div>
+			<div class="nav_right">
+				<ul>
+					<li><a href="#">全部相册</a></li>
+					<li><a href="#">上传</a></li>
+				</ul>
+			</div>
+		</nav>
+		<div class="breadnav">
+			<ul>
+				<% for(var i=0;i<pathname.length;i++){ %>
+					<li><%= pathname[i] %></li>
+				<% } %>
+			</ul>
+		</div>
+		<% for (var i=0;i<files.length;i++){ %>
+		<div class="show">
+			<a href=""><img src="<%= files[i] %>" width="300px" height="200px"></a>
+			<h4><%= files[i] %></h4>
+		</div>
+		<% } %>
+	</div>
+</body>
+</html>
