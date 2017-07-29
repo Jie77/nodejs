@@ -7,7 +7,7 @@ function getAlbumName(callback){
 	fs.readdir('./uploads',function(err,files){
 		if(err){
 			console.log(err);
-			callback("err",null);
+			callback("err",null);//注意这里返回err值！！！！否则router无法接收到err，中间件无法下传！！！
 			return;
 		}
 		var allAlbums = [];
